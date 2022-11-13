@@ -1,7 +1,7 @@
 package com.joey.pojo;
 
 public class Blog {
-    private Integer id;
+    private Integer index;
     private String image;
     private String title;
     private String text;
@@ -9,8 +9,8 @@ public class Blog {
     public Blog() {
     }
 
-    public Blog(Integer id, String image, String title, String text) {
-        this.id = id;
+    public Blog(Integer index, String image, String title, String text) {
+        this.index = index;
         this.image = image;
         this.title = title;
         this.text = text;
@@ -27,12 +27,12 @@ public class Blog {
         this.text = text;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getindex() {
+        return index;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setindex(Integer index) {
+        this.index = index;
     }
 
     public String getImage() {
@@ -62,7 +62,7 @@ public class Blog {
     @Override
     public String toString() {
         return "Blog{" +
-                "id=" + id +
+                "index=" + index +
                 ", image='" + image + '\'' +
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
