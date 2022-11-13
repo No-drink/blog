@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +14,7 @@
 <table border="1" cellspacing="0" width="800">
     <tr>
         <th>序号</th>
-        <th>题目</th>
+        <th>标题</th>
         <th>封面</th>
         <th>内容</th>
  
@@ -23,13 +24,12 @@
 
     <c:forEach items="${blogs}" var="blog" varStatus="status">
         <tr align="center">
-            <%--<td>${blog.id}</td>--%>
+            <%--<td>${blog.index}</td>--%>
             <td>${status.count}</td>
             <td>${blog.title}</td>
-
+            <td>${blog.image}</td>
             <td>${blog.text}</td>
 
-            <td><a href="#">修改</a> <a href="#">删除</a></td>
         </tr>
 
     </c:forEach>

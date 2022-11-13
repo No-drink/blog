@@ -18,13 +18,13 @@ public class SelectAllServlet extends HttpServlet {
 
 
         //1. 调用BlogService完成查询
-        List<Blog> Blogs = service.selectAll();
+        List<Blog> blogs = service.selectAll();
 
         //2. 存入request域中
-        request.setAttribute("Blogs",Blogs);
+        request.setAttribute("blogs",blogs);
 
         //3. 转发到Blog.jsp
-        request.getRequestDispatcher("/Blog.jsp").forward(request,response);
+        request.getRequestDispatcher("/blog.jsp").forward(request,response);
     }
 
     @Override

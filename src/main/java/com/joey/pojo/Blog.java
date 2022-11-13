@@ -27,11 +27,11 @@ public class Blog {
         this.text = text;
     }
 
-    public Integer getindex() {
+    public Integer getIndex() {
         return index;
     }
 
-    public void setindex(Integer index) {
+    public void setIndex(Integer index) {
         this.index = index;
     }
 
