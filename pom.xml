@@ -55,6 +55,12 @@
       <artifactId>standard</artifactId>
       <version>1.1.2</version>
     </dependency>
+    <!--md2html-->
+    <dependency>
+      <groupId>com.vladsch.flexmark</groupId>
+      <artifactId>flexmark-all</artifactId>
+      <version>0.50.42</version>
+    </dependency>
   </dependencies>
 
   <build>

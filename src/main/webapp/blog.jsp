@@ -26,7 +26,7 @@
         <tr align="center">
             <%--<td>${blog.index}</td>--%>
             <td>${status.count}</td>
-            <td>${blog.title}</td>
+            <td><a href="/blog/selectIndexServlet?index=${blog.index}">${blog.title}</a></td>
             <td>${blog.image}</td>
             <td>${blog.text}</td>
 
