@@ -10,6 +10,6 @@ public interface BlogMapper {
     @Select("select * from tb_blog")
     List<Blog> selectAll();
 
-    @Select("SELECT * FROM `blog`.`tb_blog` WHERE `index` = #{index}")
+    @Select("SELECT * FROM `myblogs`.`tb_blog` WHERE `index` = #{index}")
     Blog selectIndex(int index);
 }
