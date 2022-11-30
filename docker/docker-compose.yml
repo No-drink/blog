@@ -1,0 +1,8 @@
+version: "3.1"
+services:
+  myblog:
+    build: ./
+    image: myblog:v1.0.0
+    container_name: myblog
+    ports:
+      - 88:8080

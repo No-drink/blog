@@ -64,7 +64,7 @@
   </dependencies>
 
   <build>
-    <finalName>blog</finalName>
+    <finalName>myblog</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
