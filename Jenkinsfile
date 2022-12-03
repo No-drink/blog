@@ -1,9 +1,8 @@
 pipeline {
     agent any
     parameters {
-        gitParameter name: 'BRANCH_TAG', 
-                     type: 'PT_BRANCH_TAG',				 
-    }
+    gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
+  }
     environment{
         harborHost = '192.168.182.129:80'
         harborRepo = 'repo'
@@ -16,7 +15,7 @@ pipeline {
 
         stage('拉取Git代码') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: "${params.BRANCH_TAG}"]], extensions: [], userRemoteConfigs: [[url: 'http://192.168.182.129:8929/root/blog']]])
+                checkout([$class: 'GitSCM', branches: [[name: "${params.BRANCH}"]], extensions: [], userRemoteConfigs: [[url: 'http://192.168.182.129:8929/root/blog']]])
             }
         }
 
