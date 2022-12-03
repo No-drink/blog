@@ -12,7 +12,7 @@ pipeline {
 
         stage('拉取Git代码') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'http://192.168.182.129:8929/root/blog']]])
+                checkout([$class: 'GitSCM', branches: [[name: '${tag}']], extensions: [], userRemoteConfigs: [[url: 'http://192.168.182.129:8929/root/blog']]])
             }
         }
 
