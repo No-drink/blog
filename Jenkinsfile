@@ -1,7 +1,6 @@
 pipeline {
     agent any
     parameters {
-    parameters {
         gitParameter name: 'TAG',
                      type: 'PT_TAG',
                      defaultValue: 'master'
