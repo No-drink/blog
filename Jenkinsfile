@@ -32,8 +32,8 @@ pipeline {
 docker build -t ${JOB_NAME}:${tag} docker/'''
 
                 sh '''docker login -u ${harborUser} -p ${harborPasswd} ${harborHost}
-                docker tag myblogpipeline:${tag} ${harborHost}/${harborRepo}/myblogpipeline:${tag}
-                docker push ${harborHost}/${harborRepo}/myblogpipeline:${tag}'''
+                docker tag ${JOB_NAME}:${tag} ${harborHost}/${harborRepo}/${JOB_NAME}:${tag}
+                docker push ${harborHost}/${harborRepo}/${JOB_NAME}:${tag}'''
             }
         }
         
