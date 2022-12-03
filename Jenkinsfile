@@ -25,12 +25,14 @@ pipeline {
 
         stage('构建代码') {
             steps {
+                echo "${tag}"
                 sh '/var/jenkins_home/maven/bin/mvn clean package -DskipTests'
             }
         }
 
         stage('制作自定义镜像并发布Harbor') {
             steps {
+                echo "${tag}"
                 sh '''mv ./target/*war ./docker
 docker build -t ${JOB_NAME}:${tag} docker/'''
 
