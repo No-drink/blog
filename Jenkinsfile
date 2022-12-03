@@ -20,7 +20,7 @@ pipeline {
             steps {
                 sh '/var/jenkins_home/maven/bin/mvn clean package -DskipTests'
             }
-        }docker
+        }
 
         stage('制作自定义镜像并发布Harbor') {
             steps {
