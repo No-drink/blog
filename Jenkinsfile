@@ -26,7 +26,7 @@ pipeline {
             steps {
                 sh '''cp ./target/*.war ./docker/
                 cd ./docker
-                docker build -t ${JOB_NAME}:${tag} ./'''
+                docker build -t ${JOB_NAME}:v ./'''
 
                 sh '''docker login -u ${harborUser} -p ${harborPasswd} ${harborHost}
                 docker tag ${JOB_NAME}:${tag} ${harborHost}/${harborRepo}/${JOB_NAME}:${tag}
