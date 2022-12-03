@@ -8,6 +8,7 @@ pipeline {
         harborRepo = 'repo'
         harborUser = 'admin'
         harborPasswd = 'Harbor12345'
+        tag = ${params.BRANCH}
     }
 
     // 存放所有任务的合集
@@ -15,7 +16,7 @@ pipeline {
 
         stage('拉取Git代码') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: "${params.BRANCH}"]], extensions: [], userRemoteConfigs: [[url: 'http://192.168.182.129:8929/root/blog']]])
+                checkout([$class: 'GitSCM', branches: [[name: "${tag}"]], extensions: [], userRemoteConfigs: [[url: 'http://192.168.182.129:8929/root/blog']]])
             }
         }
 
@@ -28,11 +29,11 @@ pipeline {
         stage('制作自定义镜像并发布Harbor') {
             steps {
                 sh '''mv ./target/*war ./docker
-docker build -t myblogpipeline:v1.0.0 docker/'''
+docker build -t myblogpipeline:${tag} docker/'''
 
                 sh '''docker login -u ${harborUser} -p ${harborPasswd} ${harborHost}
-                docker tag myblogpipeline:"${params.BRANCH}" ${harborHost}/${harborRepo}/myblogpipeline:"${params.BRANCH}"
-                docker push ${harborHost}/${harborRepo}/myblogpipeline:"${params.BRANCH}"'''
+                docker tag myblogpipeline:${tag} ${harborHost}/${harborRepo}/myblogpipeline:${tag}
+                docker push ${harborHost}/${harborRepo}/myblogpipeline:${tag}'''
             }
         }
         
