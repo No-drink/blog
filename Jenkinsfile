@@ -28,7 +28,7 @@ pipeline {
         stage('制作自定义镜像并发布Harbor') {
             steps {
                 sh '''mv ./target/*war ./docker
-docker build -t myblogpipeline:"${params.BRANCH}" ./docker/'''
+docker build -t myblogpipeline:"${params.BRANCH}" docker/'''
 
                 sh '''docker login -u ${harborUser} -p ${harborPasswd} ${harborHost}
                 docker tag myblogpipeline:"${params.BRANCH}" ${harborHost}/${harborRepo}/myblogpipeline:"${params.BRANCH}"
