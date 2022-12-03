@@ -31,7 +31,8 @@ pipeline {
 
         stage('制作自定义镜像并发布Harbor') {
             steps {
-
+                sh '''mv ./target/*war ./docker
+docker build -t ${JOB_NAME}:${tag} docker/'''
 
                 sh '''docker login -u ${harborUser} -p ${harborPasswd} ${harborHost}
                 docker tag ${JOB_NAME}:${tag} ${harborHost}/${harborRepo}/${JOB_NAME}:${tag}
