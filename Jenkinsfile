@@ -1,14 +1,17 @@
 pipeline {
     agent any
     parameters {
-    gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
-  }
+    parameters {
+        gitParameter name: 'TAG',
+                     type: 'PT_TAG',
+                     defaultValue: 'master'
+    }
     environment{
         harborHost = '192.168.182.129:80'
         harborRepo = 'repo'
         harborUser = 'admin'
         harborPasswd = 'Harbor12345'
-        tag = "$params.BRANCH"
+        tag = "$params.TAG"
     }
 
     // 存放所有任务的合集
