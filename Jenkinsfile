@@ -18,14 +18,14 @@ pipeline {
 
         stage('拉取Git代码') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: "${tag}"]], extensions: [], userRemoteConfigs: [[url: 'http://192.168.182.129:8929/root/blog']]])
+                checkout([$class: 'GitSCM', branches: [[name: "${TAG}"]], extensions: [], userRemoteConfigs: [[url: 'http://192.168.182.129:8929/root/blog']]])
                 echo "${tag}"
             }
         }
 
         stage('构建代码') {
             steps {
-                echo "${tag}"
+                echo "${TAG}"
                 sh '/var/jenkins_home/maven/bin/mvn clean package -DskipTests'
             }
         }
@@ -37,14 +37,14 @@ pipeline {
 docker build -t ${JOB_NAME}:${TAG} docker/'''
 
                 sh '''docker login -u ${harborUser} -p ${harborPasswd} ${harborHost}
-                docker tag ${JOB_NAME}:${tag} ${harborHost}/${harborRepo}/${JOB_NAME}:${tag}
-                docker push ${harborHost}/${harborRepo}/${JOB_NAME}:${tag}'''
+                docker tag ${JOB_NAME}:${TAG} ${harborHost}/${harborRepo}/${JOB_NAME}:${TAG}
+                docker push ${harborHost}/${harborRepo}/${JOB_NAME}:${TAG}'''
             }
         }
         
         stage('目标服务器拉取镜像并运行') {
             steps {
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'MY_VM', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'deploy.sh $harborHost $harborRepo $JOB_NAME v2.0.0 $host_port $container_port', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'MY_VM', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'deploy.sh $harborHost $harborRepo $JOB_NAME $TAG $host_port $container_port', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
             }
         }
     }
