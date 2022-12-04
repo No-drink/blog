@@ -6,8 +6,8 @@ pipeline {
                      defaultValue: 'v1.0.0'
     }
     environment{
-        harborHost = '192.168.182.129:80'
-        harborRepo = 'repo'
+        harborAddress = '192.168.182.129:80'
+        harborRepository = 'repo'
         harborUser = 'admin'
         harborPasswd = 'Harbor12345'
         //tag = "$params.TAG"
@@ -33,23 +33,17 @@ pipeline {
                 sh '''mv ./target/*war ./docker
 docker build -t ${JOB_NAME}:${TAG} docker/'''
 
-                sh '''docker login -u ${harborUser} -p ${harborPasswd} ${harborHost}
-                docker tag ${JOB_NAME}:${TAG} ${harborHost}/${harborRepo}/${JOB_NAME}:${TAG}
-                docker push ${harborHost}/${harborRepo}/${JOB_NAME}:${TAG}'''
+                sh '''docker login -u ${harborUser} -p ${harborPasswd} ${harborAddress}
+                docker tag ${JOB_NAME}:${TAG} ${harborAddress}/${harborRepository}/${JOB_NAME}:${TAG}
+                docker push ${harborAddress}/${harborRepository}/${JOB_NAME}:${TAG}'''
             }
         }
         
         stage('目标服务器拉取镜像并运行') {
             steps {
-                echo "$harborHost" 
-                echo "$harborRepo" 
-                echo "$JOB_NAME" 
-                echo "$TAG"
-                echo "$host_port"
-                echo "$container_port"
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'MY_VM', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'deploy.sh 192.168.182.129:80 repo $JOB_NAME $TAG $host_port $container_port', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'MY_VM', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'deploy.sh $harborAddress $harborRepository $JOB_NAME $TAG $host_port $container_port', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 
-                //sshPublisher(publishers: [sshPublisherDesc(configName: 'MY_VM', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'echo "deploy.sh $harborHost $harborRepo $JOB_NAME $TAG $host_port $container_port" > test', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                //sshPublisher(publishers: [sshPublisherDesc(configName: 'MY_VM', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'echo "deploy.sh $harborAddress $harborRepository $JOB_NAME $TAG $host_port $container_port" > test', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
             }
         }
     }
