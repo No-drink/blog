@@ -19,20 +19,17 @@ pipeline {
         stage('拉取Git代码') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: "${TAG}"]], extensions: [], userRemoteConfigs: [[url: 'http://192.168.182.129:8929/root/blog']]])
-                echo "${tag}"
             }
         }
 
         stage('构建代码') {
             steps {
-                echo "${TAG}"
                 sh '/var/jenkins_home/maven/bin/mvn clean package -DskipTests'
             }
         }
 
         stage('制作自定义镜像并发布Harbor') {
             steps {
-                echo "${TAG}"
                 sh '''mv ./target/*war ./docker
 docker build -t ${JOB_NAME}:${TAG} docker/'''
 
