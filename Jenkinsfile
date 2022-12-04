@@ -10,7 +10,7 @@ pipeline {
         harborRepo = 'repo'
         harborUser = 'admin'
         harborPasswd = 'Harbor12345'
-        tag = "$params.TAG"
+        //tag = "$params.TAG"
     }
 
     // 存放所有任务的合集
