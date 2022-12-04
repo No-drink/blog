@@ -38,7 +38,7 @@ docker build -t ${JOB_NAME}:${TAG} docker/'''
                 docker push ${harborHost}/${harborRepo}/${JOB_NAME}:${TAG}'''
             }
         }
-
+        
         stage('目标服务器拉取镜像并运行') {
             steps {
                 sshPublisher(publishers: [sshPublisherDesc(configName: 'MY_VM', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'deploy.sh 192.168.182.129:80 repo $JOB_NAME $TAG $host_port $container_port', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
